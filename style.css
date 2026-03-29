@@ -1,3 +1,4 @@
+/* 리얼 캐비닛 & 일기장 줌인 테마 전체 CSS */
 :root {
     --bg-dark: #121212;
     --metal-pale-red: #d17575;
@@ -11,6 +12,7 @@
 
 body {
     background-color: var(--bg-dark);
+    /* 배경 노이즈 패턴 */
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4eJFAAAAVFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnm9bNAAAAnRSTlMABggOEBcYHh8fHyAjKCsuMDU4Ozs8PUJERUZISktPUVNaWltcX2RlaGtucnV5e31+f4GDhIaHiYqLjY6PkJKTmJqbnJ6go6Slp6mrrbGzs7W2t7m7vb6/wMPExsbHyMnKysvMzM3Oz9DT1NXW19nb3N3e3+Di4+Tm5+jr7O7v8PP09fb3+fr7/P3+fv+Bg4SGh4mKi42Oj5CSk5iYmZqbnN69fS0AAAAnSURBVEjH7Y7FEUAwDARND3Yf/reV0V9wH8y/A60yQpU/2u79/3/8f/B9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a6p4Z+5L3Fv595K8H//8Pvh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a5W6N6Y9573Gv+p8Ovh/8Pvh9+H34ffh9+H3a8H8Pvh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a8X//8Pvh9+H34ffj9');
     background-repeat: repeat;
     color: #eee;
@@ -28,13 +30,14 @@ body {
     height: 600px;
 }
 
+/* 1. 캐비닛 본체 */
 .cabinet {
     width: 100%;
     height: 100%;
     background: var(--metal-dark-red);
     position: relative;
     transform-style: preserve-3d;
-    transform: translateZ(0);
+    transform: translateZ(0); 
     box-shadow: 10px 30px 60px rgba(0,0,0,0.9), inset 0 0 50px rgba(0,0,0,0.5);
     border: 6px solid var(--edge-color);
     border-radius: 5px;
@@ -49,10 +52,12 @@ body {
     background-size: 15px 15px;
     background-position: center;
     opacity: 0.5;
+    z-index: 2;
 }
 .cabinet::before { top: 10px; }
 .cabinet::after { bottom: 10px; }
 
+/* 2. 캐비닛 내부 (내용물 튀어나오지 않게 살짝 뒤로 뺌) */
 .cabinet-inner {
     position: absolute;
     width: 100%;
@@ -62,6 +67,7 @@ body {
     padding: 30px 25px;
     background: linear-gradient(to bottom, #1a0a0a, var(--metal-dark-red));
     overflow: hidden;
+    transform: translateZ(-5px); 
     z-index: 1;
 }
 
@@ -134,14 +140,31 @@ body {
     box-shadow: 12px 15px 25px rgba(0,0,0,0.9);
 }
 
+/* 3. 캐비닛 문 (절대 안 비치게 거리를 확 띄우고 불투명하게 칠함) */
 .door {
     position: absolute;
     top: -4px; left: -4px;
     width: calc(100% + 8px); height: calc(100% + 8px);
+<<<<<<< HEAD
+    /* 완전 불투명한 배경색 먼저 깔기 */
+    background-color: var(--metal-pale-red);
+    /* 그 위에 그라데이션 질감 얹기 */
+    background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%), 
+        linear-gradient(to right, var(--metal-pale-red), #b66161);
+    background-size: 5px 100%, 100% 100%, 100% 100%;
+=======
     background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%), linear-gradient(to right, var(--metal-pale-red), #b66161); background-color: #d17575;
+>>>>>>> 1b594ec7a33c430e1c024577e70204850c002155
     border: 4px solid var(--edge-color);
     z-index: 10;
+<<<<<<< HEAD
+    /* [핵심] 내용물과 50px 거리를 둬서 뚫고 나오지 못하게 막음 */
     transform: translateZ(50px);
+=======
+    transform: translateZ(50px);
+>>>>>>> 1b594ec7a33c430e1c024577e70204850c002155
     transform-origin: left;
     transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
@@ -149,8 +172,6 @@ body {
     align-items: center;
     cursor: pointer;
     border-radius: 3px;
-    background-image: linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px);
-    background-size: 5px 100%;
 }
 
 .door::before {
@@ -188,6 +209,7 @@ body {
     box-shadow: 20px 0 60px rgba(0,0,0,0.7);
 }
 
+/* 4. 기존 사진용 모달 */
 .modal {
     display: none;
     position: fixed;
@@ -236,7 +258,7 @@ body {
     50% { opacity: 0.8; }
 }
 
-/* --- 일기장 줌인 화면 전용 --- */
+/* 5. 일기장 줌인 오버레이 전용 */
 .diary-overlay {
     display: none; 
     position: fixed;
