@@ -11,7 +11,6 @@
 
 body {
     background-color: var(--bg-dark);
-    /* 배경 노이즈 패턴 */
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4eJFAAAAVFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnm9bNAAAAnRSTlMABggOEBcYHh8fHyAjKCsuMDU4Ozs8PUJERUZISktPUVNaWltcX2RlaGtucnV5e31+f4GDhIaHiYqLjY6PkJKTmJqbnJ6go6Slp6mrrbGzs7W2t7m7vb6/wMPExsbHyMnKysvMzM3Oz9DT1NXW19nb3N3e3+Di4+Tm5+jr7O7v8PP09fb3+fr7/P3+fv+Bg4SGh4mKi42Oj5CSk5iYmZqbnN69fS0AAAAnSURBVEjH7Y7FEUAwDARND3Yf/reV0V9wH8y/A60yQpU/2u79/3/8f/B9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a6p4Z+5L3Fv595K8H//8Pvh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a5W6N6Y9573Gv+p8Ovh/8Pvh9+H34ffh9+H3a8H8Pvh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a8X//8Pvh9+H34ffj9');
     background-repeat: repeat;
     color: #eee;
@@ -29,7 +28,6 @@ body {
     height: 600px;
 }
 
-/* 1. 캐비닛 뒷벽 (제일 뒤에 고정, Z = 0) */
 .cabinet {
     width: 100%;
     height: 100%;
@@ -50,13 +48,11 @@ body {
     background-size: 15px 15px;
     background-position: center;
     opacity: 0.5;
-    /* 점선도 3px 앞으로 꺼냄 */
-    transform: translateZ(3px); 
 }
 .cabinet::before { top: 10px; }
 .cabinet::after { bottom: 10px; }
 
-/* 🌟 2. 안쪽 내용물 (뒷벽보다 2px 앞으로 꺼내서 묻히지 않게 함) */
+/* 🌟 [핵심 변경] 내용물을 아예 투명하게 만들었다가 문 열릴 때만 나타나게 함 */
 .cabinet-inner {
     position: absolute;
     width: 100%;
@@ -64,10 +60,21 @@ body {
     display: flex;
     flex-direction: column;
     padding: 30px 25px;
-    /* 원래 있어야 할 어두운 그라데이션 */
     background: linear-gradient(to bottom, #1a0a0a, var(--metal-dark-red));
-    transform-style: preserve-3d;
-    transform: translateZ(2px); 
+    z-index: 1;
+    
+    /* 평소엔 투명인간 + 클릭 방지 */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s; /* 문 닫을 땐 0.1초만에 휙 사라짐 */
+}
+
+/* 🌟 문이 열릴 때 상태 */
+.cabinet.open .cabinet-inner {
+    opacity: 1;
+    pointer-events: auto;
+    /* 문이 1/3쯤 열렸을 때(0.4초 후)부터 스르륵 나타남 */
+    transition: opacity 0.8s ease 0.4s;
 }
 
 .section-wall {
@@ -93,7 +100,8 @@ body {
     margin: 0 auto;
 }
 .photo-item:hover { 
-    transform: scale(1.1) translateZ(10px);
+    transform: scale(1.1);
+    z-index: 5; 
     border-color: #fff;
 }
 .photo-item::after {
@@ -138,7 +146,6 @@ body {
     box-shadow: 12px 15px 25px rgba(0,0,0,0.9);
 }
 
-/* 🌟 3. 캐비닛 문 (가장 앞쪽인 15px로 강제 돌출시켜 투명 현상 철벽 방어) */
 .door {
     position: absolute;
     top: -4px; left: -4px;
@@ -150,14 +157,16 @@ body {
         linear-gradient(to right, var(--metal-pale-red), #b66161);
     background-size: 5px 100%, 100% 100%, 100% 100%;
     border: 4px solid var(--edge-color);
+    z-index: 10;
     transform-origin: left;
-    transform: translateZ(15px); /* 15px 앞으로 빼기! */
     transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     border-radius: 3px;
+    /* 이전의 3D 찌꺼기 완벽 삭제 */
+    transform: none; 
 }
 
 .handle {
@@ -180,13 +189,12 @@ body {
     box-shadow: 0 1px 2px rgba(255,255,255,0.2);
 }
 
-/* 문 열릴 때도 15px 유지 */
 .cabinet.open .door { 
-    transform: rotateY(-140deg) translateZ(15px);
+    transform: rotateY(-140deg);
     box-shadow: 20px 0 60px rgba(0,0,0,0.7);
 }
 
-/* 아래는 팝업 및 일기장 오버레이 (기존과 동일) */
+/* 팝업 모달 */
 .modal {
     display: none;
     position: fixed;
@@ -235,6 +243,7 @@ body {
     50% { opacity: 0.8; }
 }
 
+/* 일기장 줌인 오버레이 */
 .diary-overlay {
     display: none; 
     position: fixed;
