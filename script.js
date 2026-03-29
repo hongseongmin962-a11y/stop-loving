@@ -1,4 +1,4 @@
-// 📖 일기장 페이지 내용 (원하는 대로 수정하세요!)
+// 📖 일기장 내용
 const diaryPages = [
     "202X. 03. 15.\n\n세상이 0도가 되었다.\n아무런 온기도 없다.",
     "202X. 04. 22.\n\n너를 온전히 삼키고 싶었다.\n그게 사랑인 줄 알았다.",
@@ -6,19 +6,16 @@ const diaryPages = [
     "(...다음 페이지는 찢어져 있다.)"
 ];
 
-let currentPage = 0; // 현재 펼쳐진 페이지 번호
+let currentPage = 0;
 
-// 🚪 모달/일기장 열기
 function openModal(type, title) {
-    event.stopPropagation(); // 클릭 이벤트가 뒤로 새어나가는 것 방지
+    event.stopPropagation(); 
     
     if (type === 'diary') {
-        // 일기장이면 새로 만든 줌인 오버레이 띄우기
-        currentPage = 0; // 항상 첫 장부터
+        currentPage = 0;
         updatePageText(); 
         document.getElementById('diaryOverlay').classList.add('show');
     } else if (type === 'photo') {
-        // 사진이면 기존 팝업 띄우기
         const modal = document.getElementById('modal');
         const mTitle = document.getElementById('modal-title');
         const mBody = document.getElementById('modal-body');
@@ -29,19 +26,15 @@ function openModal(type, title) {
     }
 }
 
-// ➡️ 화면 터치 시 다음 장으로 넘기기
 function nextPage() {
     const paper = document.getElementById('bookPaper');
     const hint = document.querySelector('.page-instruction');
     
-    // 마지막 페이지면 아무 동작 안 함
     if (currentPage >= diaryPages.length - 1) return;
 
-    // 1. 기존 글씨가 스르륵 사라짐
     paper.classList.add('fade-out');
     hint.style.opacity = '0';
     
-    // 2. 0.4초 뒤에 텍스트를 바꾸고 다시 스르륵 나타남
     setTimeout(() => {
         currentPage++;
         updatePageText();
@@ -50,14 +43,12 @@ function nextPage() {
     }, 400); 
 }
 
-// 📝 화면에 글자 찍어주는 함수
 function updatePageText() {
     const paper = document.getElementById('bookPaper');
     const hint = document.querySelector('.page-instruction');
     
     paper.innerText = diaryPages[currentPage];
     
-    // 마지막 페이지에 도달하면 터치 안내 문구 숨기기
     if (currentPage >= diaryPages.length - 1) {
         hint.style.display = 'none';
     } else {
@@ -65,7 +56,6 @@ function updatePageText() {
     }
 }
 
-// ❌ 닫기 기능들
 function closeDiary() {
     document.getElementById('diaryOverlay').classList.remove('show');
 }

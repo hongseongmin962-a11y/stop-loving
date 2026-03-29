@@ -1,4 +1,3 @@
-/* 리얼 캐비닛 테마 설정 */
 :root {
     --bg-dark: #121212;
     --metal-pale-red: #d17575;
@@ -29,17 +28,14 @@ body {
     height: 600px;
 }
 
-/* [버그 수정 완료] 캐비닛 본체 */
 .cabinet {
     width: 100%;
     height: 100%;
     background: var(--metal-dark-red);
     position: relative;
     transform-style: preserve-3d;
-    transform: translateZ(0); /* 3D 공간 초기화 */
-    box-shadow: 
-        10px 30px 60px rgba(0,0,0,0.9),
-        inset 0 0 50px rgba(0,0,0,0.5);
+    transform: translateZ(0);
+    box-shadow: 10px 30px 60px rgba(0,0,0,0.9), inset 0 0 50px rgba(0,0,0,0.5);
     border: 6px solid var(--edge-color);
     border-radius: 5px;
 }
@@ -57,7 +53,6 @@ body {
 .cabinet::before { top: 10px; }
 .cabinet::after { bottom: 10px; }
 
-/* [버그 수정 완료] 내부 공간 (뒤로 안 밀리게 함) */
 .cabinet-inner {
     position: absolute;
     width: 100%;
@@ -67,7 +62,7 @@ body {
     padding: 30px 25px;
     background: linear-gradient(to bottom, #1a0a0a, var(--metal-dark-red));
     overflow: hidden;
-    z-index: 1; /* 무조건 문 뒤에, 근데 숨지는 않게! */
+    z-index: 1;
 }
 
 .section-wall {
@@ -121,9 +116,7 @@ body {
     height: 170px;
     background: var(--paper-diary);
     border-left: 12px solid #5a3d2e;
-    box-shadow: 
-        8px 8px 20px rgba(0,0,0,0.8),
-        inset 5px 0 10px rgba(0,0,0,0.4);
+    box-shadow: 8px 8px 20px rgba(0,0,0,0.8), inset 5px 0 10px rgba(0,0,0,0.4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -141,17 +134,14 @@ body {
     box-shadow: 12px 15px 25px rgba(0,0,0,0.9);
 }
 
-/* [버그 수정 완료] 캐비닛 문 (무조건 맨 앞으로 당김) */
 .door {
     position: absolute;
     top: -4px; left: -4px;
     width: calc(100% + 8px); height: calc(100% + 8px);
-    background: 
-        linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%),
-        linear-gradient(to right, var(--metal-pale-red), #b66161); 
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%), linear-gradient(to right, var(--metal-pale-red), #b66161); 
     border: 4px solid var(--edge-color);
-    z-index: 10; /* 우선순위 1등! */
-    transform: translateZ(1px); /* 사진들보다 1픽셀 앞으로 당김 */
+    z-index: 10;
+    transform: translateZ(1px);
     transform-origin: left;
     transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
@@ -181,11 +171,8 @@ body {
     background: linear-gradient(135deg, #444, #222);
     border-radius: 8px;
     border: 2px solid #1a1a1a;
-    box-shadow: 
-        inset 0 0 8px rgba(255,255,255,0.1),
-        3px 3px 5px rgba(0,0,0,0.6);
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.1), 3px 3px 5px rgba(0,0,0,0.6);
 }
-
 .handle::after {
     content: '';
     position: absolute;
@@ -210,9 +197,8 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 .modal-content {
-    background: var(--paper);
+    background: #fdf5e6;
     background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
     color: #331a1a;
     width: 90%;
@@ -224,7 +210,6 @@ body {
     transition: 0.5s;
 }
 .modal.open .modal-content { transform: scale(1); }
-
 .close-btn {
     position: absolute;
     top: 15px; right: 20px;
@@ -250,8 +235,8 @@ body {
     0%, 100% { opacity: 0.3; }
     50% { opacity: 0.8; }
 }
-/* --- 아래부터 일기장 확대 화면(오버레이) 전용 CSS --- */
 
+/* --- 일기장 줌인 화면 전용 --- */
 .diary-overlay {
     display: none; 
     position: fixed;
@@ -262,50 +247,42 @@ body {
     align-items: center;
     flex-direction: column;
     opacity: 0;
-    transition: opacity 0.5s ease; /* 서서히 어두워짐 */
+    transition: opacity 0.5s ease;
 }
-
 .diary-overlay.show {
     display: flex;
     opacity: 1;
 }
 
-/* 낡은 일기장 종이 디자인 */
 .book-container {
     width: 90%;
     max-width: 400px;
     height: 550px;
-    background-color: #e8dbce; /* 누런 갱지 색상 */
+    background-color: #e8dbce;
     background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
     box-shadow: 0 0 50px rgba(0,0,0,1), inset 0 0 40px rgba(100,70,40,0.5);
     border-radius: 5px 15px 15px 5px;
     padding: 50px 30px;
     position: relative;
     cursor: pointer;
-    transform: scale(0.7) translateY(50px); /* 처음에 작고 아래에 있음 */
+    transform: scale(0.7) translateY(50px);
     transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-
 .diary-overlay.show .book-container {
-    transform: scale(1) translateY(0); /* 클릭 시 내 눈앞으로 줌인! */
+    transform: scale(1) translateY(0);
 }
 
-/* 필기체 텍스트 설정 */
 .book-paper {
-    font-family: 'Nanum Pen Script', cursive; /* 불러온 필기체 적용 */
+    font-family: 'Nanum Pen Script', cursive;
     font-size: 2.2rem;
-    color: #2a1f1a; /* 살짝 바랜 검은색(잉크) */
+    color: #2a1f1a;
     line-height: 1.5;
-    white-space: pre-wrap; /* 줄바꿈 그대로 인식 */
+    white-space: pre-wrap;
     opacity: 1;
-    transition: opacity 0.4s ease; /* 글씨 스르륵 사라지고 나타남 */
+    transition: opacity 0.4s ease;
 }
+.book-paper.fade-out { opacity: 0; }
 
-.book-paper.fade-out {
-    opacity: 0; /* 글씨 숨기기용 */
-}
-
-/* 터치 안내 문구 깜빡임 효과 */
 .page-instruction {
     position: absolute;
     bottom: 25px;
@@ -315,12 +292,6 @@ body {
     font-family: 'Apple SD Gothic Neo', sans-serif;
     animation: blink 2s infinite;
 }
-
-@keyframes blink {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
-}
-
 .close-book {
     margin-top: 30px;
     color: #888;
