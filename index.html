@@ -3,35 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> A의 캐비닛</title>
+    <title>사랑을 그만두는 방법 - A의 캐비닛</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="stage">
-        <div class="cabinet" id="myCabinet">
-            <div class="cabinet-inner">
-                <div class="section-wall">
-                    <div class="photo-item" style="transform: rotate(-5deg);" onclick="openModal('photo', 'T01_0도의 시선 스틸컷')"></div>
-                    <div class="photo-item" style="transform: rotate(3deg);" onclick="openModal('photo', 'T04_서로를 먹는 꿈 스틸컷')"></div>
-                </div>
-                <div class="section-floor">
-                    <div class="diary-book" onclick="openModal('diary')">A's DIARY</div>
-                </div>
-            </div>
-            <div class="door" onclick="toggleDoor()">
-                <div class="handle"></div>
-            </div>
         </div>
-        <div class="tip">TAP TO EXPLORE A'S ROOM</div>
-    </div>
 
     <div class="modal" id="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modal-title" style="font-weight: bold; margin-bottom: 20px; color: #8b0000;"></div>
-            <div id="modal-body"></div>
         </div>
+
+    <div class="diary-overlay" id="diaryOverlay">
+        <div class="book-container" onclick="nextPage()">
+            <div class="book-paper" id="bookPaper"></div>
+            <div class="page-instruction">화면을 터치해서 다음 장으로...</div>
+        </div>
+        <div class="close-book" onclick="closeDiary()">[ 일기장 덮기 ]</div>
     </div>
 
     <script src="script.js"></script>

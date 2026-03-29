@@ -250,3 +250,83 @@ body {
     0%, 100% { opacity: 0.3; }
     50% { opacity: 0.8; }
 }
+/* --- 아래부터 일기장 확대 화면(오버레이) 전용 CSS --- */
+
+.diary-overlay {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.5s ease; /* 서서히 어두워짐 */
+}
+
+.diary-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+/* 낡은 일기장 종이 디자인 */
+.book-container {
+    width: 90%;
+    max-width: 400px;
+    height: 550px;
+    background-color: #e8dbce; /* 누런 갱지 색상 */
+    background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
+    box-shadow: 0 0 50px rgba(0,0,0,1), inset 0 0 40px rgba(100,70,40,0.5);
+    border-radius: 5px 15px 15px 5px;
+    padding: 50px 30px;
+    position: relative;
+    cursor: pointer;
+    transform: scale(0.7) translateY(50px); /* 처음에 작고 아래에 있음 */
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.diary-overlay.show .book-container {
+    transform: scale(1) translateY(0); /* 클릭 시 내 눈앞으로 줌인! */
+}
+
+/* 필기체 텍스트 설정 */
+.book-paper {
+    font-family: 'Nanum Pen Script', cursive; /* 불러온 필기체 적용 */
+    font-size: 2.2rem;
+    color: #2a1f1a; /* 살짝 바랜 검은색(잉크) */
+    line-height: 1.5;
+    white-space: pre-wrap; /* 줄바꿈 그대로 인식 */
+    opacity: 1;
+    transition: opacity 0.4s ease; /* 글씨 스르륵 사라지고 나타남 */
+}
+
+.book-paper.fade-out {
+    opacity: 0; /* 글씨 숨기기용 */
+}
+
+/* 터치 안내 문구 깜빡임 효과 */
+.page-instruction {
+    position: absolute;
+    bottom: 25px;
+    right: 30px;
+    font-size: 0.9rem;
+    color: #886655;
+    font-family: 'Apple SD Gothic Neo', sans-serif;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.close-book {
+    margin-top: 30px;
+    color: #888;
+    cursor: pointer;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+.close-book:hover { color: #cc3333; }
