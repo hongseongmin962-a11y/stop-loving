@@ -1,18 +1,17 @@
 /* 리얼 캐비닛 테마 설정 */
 :root {
-    --bg-dark: #121212; /* 배경을 좀 더 자연스러운 검은색으로 */
-    --metal-pale-red: #d17575; /* 문 색상 (약간 더 깊게) */
-    --metal-dark-red: #6e3d3d; /* 본체 내부 색상 */
-    --edge-color: #2a1919; /* 테두리 색상 */
-    --accent-pin: #cc3333; /* 핀 붉은색 */
-    --paper-diary: #6e4e3e; /* 일기장 갈색 */
+    --bg-dark: #121212;
+    --metal-pale-red: #d17575;
+    --metal-dark-red: #6e3d3d;
+    --edge-color: #2a1919;
+    --accent-pin: #cc3333;
+    --paper-diary: #6e4e3e;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     background-color: var(--bg-dark);
-    /* [디테일] 배경에 아주 미세한 노이즈 패턴을 넣어 밋밋함을 없앰 */
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4eJFAAAAVFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnm9bNAAAAnRSTlMABggOEBcYHh8fHyAjKCsuMDU4Ozs8PUJERUZISktPUVNaWltcX2RlaGtucnV5e31+f4GDhIaHiYqLjY6PkJKTmJqbnJ6go6Slp6mrrbGzs7W2t7m7vb6/wMPExsbHyMnKysvMzM3Oz9DT1NXW19nb3N3e3+Di4+Tm5+jr7O7v8PP09fb3+fr7/P3+fv+Bg4SGh4mKi42Oj5CSk5iYmZqbnN69fS0AAAAnSURBVEjH7Y7FEUAwDARND3Yf/reV0V9wH8y/A60yQpU/2u79/3/8f/B9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a6p4Z+5L3Fv595K8H//8Pvh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a5W6N6Y9573Gv+p8Ovh/8Pvh9+H34ffh9+H3a8H8Pvh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H34ffh9+H3a8X//8Pvh9+H34ffj9');
     background-repeat: repeat;
     color: #eee;
@@ -25,32 +24,32 @@ body {
 }
 
 .stage {
-    perspective: 3000px; /* 3D 효과를 좀 더 자연스럽게 */
+    perspective: 3000px;
     width: 350px;
     height: 600px;
 }
 
-/* [디테일] 실제 캐비닛 뼈대와 테두리 효과 */
+/* [버그 수정 완료] 캐비닛 본체 */
 .cabinet {
     width: 100%;
     height: 100%;
-    background: #3a1c1c; 
-    border: 6px solid #2a1919;
+    background: var(--metal-dark-red);
     position: relative;
-    /* [수정] 3D 공간을 명확히 정의하여 레이어 순서를 지키게 함 */
     transform-style: preserve-3d;
-    transform: translateZ(0); /* 3D 좌표 초기화 */
-    box-shadow: 10px 30px 60px rgba(0,0,0,0.9);
+    transform: translateZ(0); /* 3D 공간 초기화 */
+    box-shadow: 
+        10px 30px 60px rgba(0,0,0,0.9),
+        inset 0 0 50px rgba(0,0,0,0.5);
+    border: 6px solid var(--edge-color);
+    border-radius: 5px;
 }
 
-/* [디테일] 캐비닛 상단/하단 환기구 구멍들 효과 */
 .cabinet::after, .cabinet::before {
     content: '';
     position: absolute;
     width: 100%;
     height: 30px;
-    background-image: 
-        radial-gradient(circle, #1a1010 1px, transparent 1px);
+    background-image: radial-gradient(circle, #1a1010 1px, transparent 1px);
     background-size: 15px 15px;
     background-position: center;
     opacity: 0.5;
@@ -58,7 +57,7 @@ body {
 .cabinet::before { top: 10px; }
 .cabinet::after { bottom: 10px; }
 
-
+/* [버그 수정 완료] 내부 공간 (뒤로 안 밀리게 함) */
 .cabinet-inner {
     position: absolute;
     width: 100%;
@@ -68,11 +67,9 @@ body {
     padding: 30px 25px;
     background: linear-gradient(to bottom, #1a0a0a, var(--metal-dark-red));
     overflow: hidden;
-    z-index: 1; /* 내부 요소들이 뒷벽보다 무조건 앞에 오도록 수정! */
-    /* transform: translateZ(-10px); <- 이 범인을 삭제했습니다 */
+    z-index: 1; /* 무조건 문 뒤에, 근데 숨지는 않게! */
 }
 
-/* [디테일] 섹션 구분선 디자인 */
 .section-wall {
     flex: 2;
     border-bottom: 2px solid rgba(0,0,0,0.3);
@@ -83,13 +80,12 @@ body {
     padding-bottom: 25px;
 }
 
-/* [디테일] 폴라로이드 사진 질감 업그레이드 */
 .photo-item {
     width: 100%;
     aspect-ratio: 1/1;
-    background: #080808; /* 사진 부분은 아주 어둡게 */
-    border: 3px solid #fdfdfd; /* 두꺼운 폴라로이드 테두리 */
-    box-shadow: 3px 5px 10px rgba(0,0,0,0.6); /* 외부 그림자 */
+    background: #080808;
+    border: 3px solid #fdfdfd;
+    box-shadow: 3px 5px 10px rgba(0,0,0,0.6);
     cursor: pointer;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
@@ -97,11 +93,10 @@ body {
     margin: 0 auto;
 }
 .photo-item:hover { 
-    transform: scale(1.1) translateZ(20px); /* 마우스 올리면 앞으로 튀어나옴 */
+    transform: scale(1.1) translateZ(20px);
     z-index: 5; 
     border-color: #fff;
 }
-/* [디테일] 사진 아래 핀 디테일 (붉은색 포인트) */
 .photo-item::after {
     content: '';
     position: absolute;
@@ -117,19 +112,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0,0,0,0.2); /* 바닥 부분 색감 조정 */
+    background: rgba(0,0,0,0.2);
     border-radius: 5px;
 }
 
-/* [디테일] 일기장 질감 업그레이드 (낡은 노트) */
 .diary-book {
     width: 130px;
     height: 170px;
     background: var(--paper-diary);
     border-left: 12px solid #5a3d2e;
     box-shadow: 
-        8px 8px 20px rgba(0,0,0,0.8), /* 외부 그림자 */
-        inset 5px 0 10px rgba(0,0,0,0.4); /* 책등 깊이감 */
+        8px 8px 20px rgba(0,0,0,0.8),
+        inset 5px 0 10px rgba(0,0,0,0.4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -147,25 +141,28 @@ body {
     box-shadow: 12px 15px 25px rgba(0,0,0,0.9);
 }
 
-/* [디테일] 캐비닛 문 - 연한 빨강 메탈 낡은 질감 */
+/* [버그 수정 완료] 캐비닛 문 (무조건 맨 앞으로 당김) */
 .door {
     position: absolute;
-    top: -4px; left: -4px; /* 프레임 오차 수정 */
-    width: calc(100% + 8px); height: calc(100% + 8px); /* 프레임 덮게 크기 조정 */
-    background: linear-gradient(135deg, #d67a7a, #9e4a4a); 
-    border: 4px solid #2a1919;
-    /* [핵심 수정] 문을 물리적으로 사진들보다 앞으로 당김 */
-    z-index: 10;
-    transform: translateZ(1px); /* 1픽셀 앞으로 당겨서 가림 */
+    top: -4px; left: -4px;
+    width: calc(100% + 8px); height: calc(100% + 8px);
+    background: 
+        linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%),
+        linear-gradient(to right, var(--metal-pale-red), #b66161); 
+    border: 4px solid var(--edge-color);
+    z-index: 10; /* 우선순위 1등! */
+    transform: translateZ(1px); /* 사진들보다 1픽셀 앞으로 당김 */
     transform-origin: left;
-    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 3px;
+    background-image: linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-size: 5px 100%;
 }
 
-/* [디테일] 문이 닫혔을 때 살짝 뜨게 보이게 하여 3D감 증폭 */
 .door::before {
     content: '';
     position: absolute;
@@ -176,22 +173,19 @@ body {
 }
 .cabinet.open .door::before { opacity: 0; }
 
-/* [디테일] 철제 손잡이 디테일 */
 .handle {
     position: absolute;
     right: 30px;
     width: 15px;
     height: 90px;
-    background: 
-        linear-gradient(135deg, #444, #222); /* 메탈릭 그라데이션 */
+    background: linear-gradient(135deg, #444, #222);
     border-radius: 8px;
     border: 2px solid #1a1a1a;
     box-shadow: 
-        inset 0 0 8px rgba(255,255,255,0.1), /* 금속광택 */
-        3px 3px 5px rgba(0,0,0,0.6); /* 외부 그림자 */
+        inset 0 0 8px rgba(255,255,255,0.1),
+        3px 3px 5px rgba(0,0,0,0.6);
 }
 
-/* [디테일] 열쇠 구멍 디테일 추가 */
 .handle::after {
     content: '';
     position: absolute;
@@ -203,11 +197,10 @@ body {
 }
 
 .cabinet.open .door { 
-    transform: rotateY(-140deg); /* 문을 좀 더 활짝 엶 */
-    box-shadow: 20px 0 60px rgba(0,0,0,0.7); /* 문 열렸을 때 그림자 방향 변경 */
+    transform: rotateY(-140deg);
+    box-shadow: 20px 0 60px rgba(0,0,0,0.7);
 }
 
-/* [디테일] 모달 디자인 (오래된 종이 질감) */
 .modal {
     display: none;
     position: fixed;
@@ -220,20 +213,17 @@ body {
 
 .modal-content {
     background: var(--paper);
-    /* [디테일] 종이 질감 이미지 링크 (오래된 종이 효과) */
     background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
     color: #331a1a;
     width: 90%;
     max-width: 500px;
     padding: 50px;
     position: relative;
-    box-shadow: 0 0 50px rgba(200,100,100,0.1); /* 붉은색 은은한 후광 */
+    box-shadow: 0 0 50px rgba(200,100,100,0.1);
     transform: scale(0.7);
     transition: 0.5s;
 }
-.modal.open .modal-content {
-    transform: scale(1); /* 모달 열릴 때 튀어나오는 효과 */
-}
+.modal.open .modal-content { transform: scale(1); }
 
 .close-btn {
     position: absolute;
@@ -250,11 +240,11 @@ body {
     bottom: -60px;
     width: 100%;
     text-align: center;
-    color: rgba(255,255,255,0.2); /* 팁 색상을 아주 어둡게 */
+    color: rgba(255,255,255,0.2);
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 3px;
-    animation: pulse 2s infinite; /* 깜빡이는 효과 */
+    animation: pulse 2s infinite;
 }
 @keyframes pulse {
     0%, 100% { opacity: 0.3; }
