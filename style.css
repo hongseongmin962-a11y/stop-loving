@@ -138,10 +138,10 @@ body {
     position: absolute;
     top: -4px; left: -4px;
     width: calc(100% + 8px); height: calc(100% + 8px);
-    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%), linear-gradient(to right, var(--metal-pale-red), #b66161); 
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%), linear-gradient(to right, var(--metal-pale-red), #b66161); background-color: #d17575;
     border: 4px solid var(--edge-color);
     z-index: 10;
-    transform: translateZ(1px);
+    transform: translateZ(50px);
     transform-origin: left;
     transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
