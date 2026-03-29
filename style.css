@@ -34,14 +34,13 @@ body {
 .cabinet {
     width: 100%;
     height: 100%;
-    background: var(--metal-dark-red);
+    background: #3a1c1c; 
+    border: 6px solid #2a1919;
     position: relative;
+    /* [수정] 3D 공간을 명확히 정의하여 레이어 순서를 지키게 함 */
     transform-style: preserve-3d;
-    box-shadow: 
-        10px 30px 60px rgba(0,0,0,0.9), /* 외부 그림자 */
-        inset 0 0 50px rgba(0,0,0,0.5); /* 내부 깊이감 */
-    border: 6px solid var(--edge-color); /* 굵은 프레임 */
-    border-radius: 5px; /* 아주 살짝 라운드 처리 */
+    transform: translateZ(0); /* 3D 좌표 초기화 */
+    box-shadow: 10px 30px 60px rgba(0,0,0,0.9);
 }
 
 /* [디테일] 캐비닛 상단/하단 환기구 구멍들 효과 */
@@ -151,25 +150,19 @@ body {
 /* [디테일] 캐비닛 문 - 연한 빨강 메탈 낡은 질감 */
 .door {
     position: absolute;
-    top: -2px; left: -2px; /* 프레임 위에 덮어쓰기 */
-    width: 100%; height: 100%;
-    /* 연한 빨강 그라데이션에 금속 하이라이트 추가 */
-    background: 
-        linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%),
-        linear-gradient(to right, var(--metal-pale-red), #b66161); 
-    border: 4px solid var(--edge-color);
+    top: -4px; left: -4px; /* 프레임 오차 수정 */
+    width: calc(100% + 8px); height: calc(100% + 8px); /* 프레임 덮게 크기 조정 */
+    background: linear-gradient(135deg, #d67a7a, #9e4a4a); 
+    border: 4px solid #2a1919;
+    /* [핵심 수정] 문을 물리적으로 사진들보다 앞으로 당김 */
     z-index: 10;
+    transform: translateZ(1px); /* 1픽셀 앞으로 당겨서 가림 */
     transform-origin: left;
-    transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 문 여는 속도 자연스럽게 */
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-radius: 3px;
-    /* [디테일] 문 표면에 세로 줄무늬 디테일 (철제 캐비닛 특유의) */
-    background-image: 
-        linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px);
-    background-size: 5px 100%;
 }
 
 /* [디테일] 문이 닫혔을 때 살짝 뜨게 보이게 하여 3D감 증폭 */
