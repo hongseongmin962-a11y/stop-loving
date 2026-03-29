@@ -1,0 +1,151 @@
+:root {
+    --bg-dark: #0a0a0a;
+    --metal: #2c2c2c;
+    --accent: #8b0000;
+    --paper: #fdf5e6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-dark);
+    color: #ccc;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Apple SD Gothic Neo', 'Noto Serif KR', serif;
+    overflow: hidden;
+}
+
+.stage {
+    perspective: 2000px;
+    width: 350px;
+    height: 600px;
+}
+
+.cabinet {
+    width: 100%;
+    height: 100%;
+    background: #3a1c1c; 
+    border: 4px solid #221111;
+    position: relative;
+    transform-style: preserve-3d;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+}
+
+.cabinet-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: linear-gradient(to bottom, #1a0a0a, #3a1c1c);
+}
+
+.section-wall {
+    flex: 2;
+    border-bottom: 1px solid #442222;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 20px;
+    align-content: center;
+}
+
+.photo-item {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #222;
+    border: 4px solid #fff;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: relative;
+}
+.photo-item:hover { transform: scale(1.1); z-index: 5; }
+
+.section-floor {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.diary-book {
+    width: 120px;
+    height: 160px;
+    background: #3d2b1f;
+    border-left: 10px solid #2a1f16;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #8a705e;
+    transition: 0.3s;
+}
+
+.door {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, #d67a7a, #9e4a4a); 
+    border: 2px solid #5a2d2d;
+    z-index: 10;
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.handle {
+    position: absolute;
+    right: 20px;
+    width: 12px;
+    height: 80px;
+    background: #2a1515;
+    border-radius: 6px;
+}
+
+.cabinet.open .door { transform: rotateY(-130deg); }
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.modal-content {
+    background: var(--paper);
+    color: #222;
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.close-btn {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.tip {
+    position: absolute;
+    bottom: -50px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #663333;
+}

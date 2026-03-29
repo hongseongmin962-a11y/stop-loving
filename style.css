@@ -1,0 +1,41 @@
+// 문 열기/닫기
+function toggleDoor() {
+    document.getElementById('myCabinet').classList.toggle('open');
+}
+
+// 모달 열기
+function openModal(type, title) {
+    // 이벤트 전파 방지 (캐비닛 문이 닫히지 않게)
+    event.stopPropagation();
+    
+    const modal = document.getElementById('modal');
+    const mTitle = document.getElementById('modal-title');
+    const mBody = document.getElementById('modal-body');
+
+    modal.style.display = 'flex';
+
+    if (type === 'photo') {
+        mTitle.innerText = title;
+        mBody.innerHTML = '<div style="width:100%; height:300px; background:#ddd; display:flex; justify-content:center; align-items:center;">[여기에 이미지를 넣으세요]</div>';
+    } else if (type === 'diary') {
+        mTitle.innerText = "A의 일기 기록";
+        mBody.innerHTML = `
+            <div style="margin-bottom:20px;"><strong>202X.03.15</strong><br>세상이 0도가 되었다. 아무런 온기도 없다.</div>
+            <div style="margin-bottom:20px;"><strong>202X.04.22</strong><br>너를 온전히 삼키고 싶었다. 그게 사랑인 줄 알았다.</div>
+            <hr>
+            <p style="margin-top:20px; font-size:0.9rem; color:#666;">...이후의 기록은 제작 중입니다.</p>
+        `;
+    }
+}
+
+// 모달 닫기
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+// 배경 클릭 시 모달 닫기
+window.onclick = function(event) {
+    if (event.target == document.getElementById('modal')) {
+        closeModal();
+    }
+}
