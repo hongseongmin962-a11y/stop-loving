@@ -315,3 +315,15 @@ body {
     transition: 0.3s;
 }
 .close-book:hover { color: #cc3333; }
+/* --- [필살기] 문이 닫혀있을 땐 내부를 아예 투명인간 처리 --- */
+.cabinet:not(.open) .cabinet-inner {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* 문이 열릴 때만 스르륵 나타나게 함 */
+.cabinet.open .cabinet-inner {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: opacity 0.5s ease 0.3s !important; 
+}
