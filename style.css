@@ -145,7 +145,6 @@ body {
     position: absolute;
     top: -4px; left: -4px;
     width: calc(100% + 8px); height: calc(100% + 8px);
-<<<<<<< HEAD
     /* 완전 불투명한 배경색 먼저 깔기 */
     background-color: var(--metal-pale-red);
     /* 그 위에 그라데이션 질감 얹기 */
@@ -154,17 +153,10 @@ body {
         linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%), 
         linear-gradient(to right, var(--metal-pale-red), #b66161);
     background-size: 5px 100%, 100% 100%, 100% 100%;
-=======
-    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 40%), linear-gradient(to right, var(--metal-pale-red), #b66161); background-color: #d17575;
->>>>>>> 1b594ec7a33c430e1c024577e70204850c002155
     border: 4px solid var(--edge-color);
     z-index: 10;
-<<<<<<< HEAD
     /* [핵심] 내용물과 50px 거리를 둬서 뚫고 나오지 못하게 막음 */
     transform: translateZ(50px);
-=======
-    transform: translateZ(50px);
->>>>>>> 1b594ec7a33c430e1c024577e70204850c002155
     transform-origin: left;
     transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
